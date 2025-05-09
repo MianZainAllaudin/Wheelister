@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheelister | All Cars</title>
+    <link rel="icon" href="logo-removebg-preview.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fc;
+            padding-top: 80px;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand img {
+            height: 50px;
+        }
+        
+        .navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-link {
+            color: var(--dark-color);
+            font-weight: 500;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 30px;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .hero-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        /* Cards and Tables */
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            border: none;
+        }
+        
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table th {
+            border-top: none;
+            font-weight: 600;
+            color: #555;
+            background-color: rgba(67, 97, 238, 0.05);
+            white-space: nowrap;
+        }
+        
+        .table td {
+            vertical-align: middle;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(67, 97, 238, 0.03);
+        }
+        
+        .badge-status {
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+        
+        .badge-available {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+        
+        .badge-booked {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+        
+        /* Buttons */
+        .primary-button {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .primary-button:hover {
+            background: linear-gradient(135deg, #3a0ca3, #4361ee);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            color: white;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+        
+        /* Search and Filter */
+        .search-filter-row {
+            margin-bottom: 20px;
+        }
+        
+        .input-group-text {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+        }
+        
+        /* Pagination */
+        .pagination {
+            margin-bottom: 0;
+        }
+        
+        .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .page-link {
+            color: var(--primary-color);
+        }
+        
+        .page-link:hover {
+            color: var(--secondary-color);
+        }
+        
+        /* Animations */
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #1a1a2e;
+            color: #f7f7f7;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-logo img {
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links h5 {
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links ul li a {
+            color: #bbbbbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links ul li a:hover {
+            color: #ffffff;
+            padding-left: 5px;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbbbbb;
+            font-size: 0.9rem;
+        }
+        
+        /* Action buttons in table */
+        .btn-action {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            margin-right: 5px;
+            color: white;
+        }
+        
+        .btn-view {
+            background-color: var(--primary-color);
+        }
+        
+        .btn-edit {
+            background-color: #ffc107;
+        }
+        
+        .btn-delete {
+            background-color: #dc3545;
+        }
+        
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+        
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+        
+        #noCarsMessage {
+            text-align: center;
+            padding: 30px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="logo-removebg-preview.png" alt="Wheelister Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-car me-1"></i> Cars</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="adminsettings.html"><i class="fas fa-cog me-1"></i> Settings</a>
+                    </li>
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="login.html" > logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 animate-in" style="animation-delay: 0.1s">
+                    <h1 class="hero-heading">ALL CARS</h1>
+                    <p class="mb-0">View and manage all vehicles in your car rental fleet.</p>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block text-end animate-in" style="animation-delay: 0.3s">
+                    <i class="fas fa-car" style="font-size: 5rem; opacity: 0.3"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="container">
+        <!-- Search and Filter Row -->
+        <div class="row search-filter-row animate-in" style="animation-delay: 0.4s">
+            <div class="col-md-6 mb-3">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search cars...">
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <select id="warehouseFilter" class="form-select">
+                    <option value="">All Warehouses</option>
+                    <!-- Warehouse options will be populated dynamically -->
+                </select>
+            </div>
+           
+        </div>
+
+        <!-- Cars List -->
+        <div class="card animate-in" style="animation-delay: 0.5s">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-car me-2"></i> Cars List</h5>
+                <div>
+                    <button class="btn btn-sm btn-outline-primary me-2" id="refreshBtn">
+                        <i class="fas fa-sync-alt me-1"></i> Refresh
+                    </button>
+                   
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div id="loadingContainer" class="loading-container">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <div id="noCarsMessage" style="display: none;">
+                    <i class="fas fa-car-crash mb-3" style="font-size: 3rem; opacity: 0.3"></i>
+                    <h4>No cars found</h4>
+                    <p>Try changing your search criteria or add a new car.</p>
+                </div>
+                <div class="table-responsive" id="carsTableContainer" style="display: none;">
+                    <table class="table table-hover" id="carsTable">
+                        <thead>
+                            <tr>
+                                <th>Car No</th>
+                                <th>Car Name</th>
+                                <th>Miles</th>
+                                <th>Booking Price</th>
+                                <th>Warehouse No</th>
+                                <th>Status</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Table rows will be populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row align-items-center">
+                    <div class="col-md-6 mb-2 mb-md-0">
+                        <div id="tableInfo">Showing 0 to 0 of 0 entries</div>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="pagination justify-content-md-end justify-content-center" id="pagination">
+                            <!-- Pagination will be populated dynamically -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Car Modal -->
+    <div class="modal fade" id="addCarModal" tabindex="-1" aria-labelledby="addCarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCarModalLabel">Add New Car</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="carForm">
+                        <div class="mb-3">
+                            <label for="carName" class="form-label">Car Name</label>
+                            <input type="text" class="form-control" id="carName" name="carName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="warehouseNameForCar" class="form-label">Warehouse Name</label>
+                            <input type="text" class="form-control" id="warehouseNameForCar" name="warehouseNameForCar" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="carMiles" class="form-label">Car Miles</label>
+                                    <input type="number" class="form-control" id="carMiles" name="carMiles" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="carBookingPrice" class="form-label">Car Booking Price</label>
+                                    <input type="number" class="form-control" id="carBookingPrice" name="carBookingPrice" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Car Modal -->
+    <div class="modal fade" id="viewCarModal" tabindex="-1" aria-labelledby="viewCarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewCarModalLabel">Car Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Car Information</h6>
+                            <p><strong>Car No:</strong> <span id="viewCarNo"></span></p>
+                            <p><strong>Car Name:</strong> <span id="viewCarName"></span></p>
+                            <p><strong>Miles:</strong> <span id="viewCarMiles"></span></p>
+                            <p><strong>Booking Price:</strong> $<span id="viewCarPrice"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Warehouse Information</h6>
+                            <p><strong>Warehouse No:</strong> <span id="viewWarehouseNo"></span></p>
+                            <div id="warehouseInfoContainer">
+                                <!-- Warehouse details will be shown here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h6>Booking History</h6>
+                            <div id="bookingHistoryContainer">
+                                <p class="text-muted">No booking history available.</p>
+                                <!-- Booking history will be shown here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteCarModal" tabindex="-1" aria-labelledby="deleteCarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteCarModalLabel">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete the car <strong id="deleteCarName"></strong>?</p>
+                    <p class="text-danger">This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Car Modal -->
+    <div class="modal fade" id="editCarModal" tabindex="-1" aria-labelledby="editCarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCarModalLabel">Edit Car</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editCarForm">
+                        <input type="hidden" id="editCarNo">
+                        <div class="mb-3">
+                            <label for="editCarName" class="form-label">Car Name</label>
+                            <input type="text" class="form-control" id="editCarName" name="editCarName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editWarehouseName" class="form-label">Warehouse Name</label>
+                            <input type="text" class="form-control" id="editWarehouseName" name="editWarehouseName" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editCarMiles" class="form-label">Car Miles</label>
+                                    <input type="number" class="form-control" id="editCarMiles" name="editCarMiles" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="editCarBookingPrice" class="form-label">Car Booking Price</label>
+                                    <input type="number" class="form-control" id="editCarBookingPrice" name="editCarBookingPrice" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn primary-button" id="updateCarBtn">Update Car</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto" id="toastTitle">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        <img src="logo-removebg-preview.png" alt="Wheelister Logo">
+                    </div>
+                    <p>Your trusted partner for premium car rentals across Pakistan. Making your journeys comfortable and memorable since 2020.</p>
+                    <div class="mt-3">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-sm-4 col-6 mb-4">
+                    <div class="footer-links">
+                        <h5>Company</h5>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Our Team</a></li>
+                            <li><a href="#">Careers</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-sm-4 col-6 mb-4">
+                    <div class="footer-links">
+                        <h5>Support</h5>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">FAQs</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center copyright">
+                &copy; 2025 Wheelister. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables
+        let allCars = [];
+        let filteredCars = [];
+        let currentPage = 1;
+        const carsPerPage = 10;
+        let allWarehouses = [];
+        let currentCarForDelete = null;
+        
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const warehouseFilter = document.getElementById('warehouseFilter');
+        const carsTableContainer = document.getElementById('carsTableContainer');
+        const loadingContainer = document.getElementById('loadingContainer');
+        const noCarsMessage = document.getElementById('noCarsMessage');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const pagination = document.getElementById('pagination');
+        const tableInfo = document.getElementById('tableInfo');
+        
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply scroll effect
+            applyScrollEffect();
+            
+            // Load data
+            fetchAllCars();
+            fetchWarehouses();
+            
+            // Add event listeners
+            addEventListeners();
+            
+            // Apply animations
+            applyAnimations();
+        });
+        
+        // Apply scroll effect to navbar
+        function applyScrollEffect() {
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    document.querySelector('.navbar').classList.add('scrolled');
+                } else {
+                    document.querySelector('.navbar').classList.remove('scrolled');
+                }
+            });
+        }
+        
+        // Add event listeners
+        function addEventListeners() {
+            // Search input
+            searchInput.addEventListener('input', function() {
+                filterCars();
+            });
+            
+            // Warehouse filter
+            warehouseFilter.addEventListener('change', function() {
+                filterCars();
+            });
+            
+            // Refresh button
+            refreshBtn.addEventListener('click', function() {
+                fetchAllCars();
+            });
+            
+            
+            // Add car button
+            
+            // Confirm delete button
+            document.getElementById('confirmDeleteBtn').addEventListener('click', deleteCar);
+            
+            // Update car button
+            document.getElementById('updateCarBtn').addEventListener('click', updateCar);
+        }
+        
+        // Apply animations
+        function applyAnimations() {
+            const animateElements = document.querySelectorAll('.animate-in');
+            
+            animateElements.forEach(element => {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.animationPlayState = 'running';
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                
+                observer.observe(element);
+            });
+        }
+        
+        // Fetch all cars from the API
+        async function fetchAllCars() {
+            showLoading(true);
+            
+            try {
+                const response = await fetch('http://localhost:3000/all-cars');
+                const result = await response.json();
+                
+                if (result.success) {
+                    allCars = result.data || [];
+                    filteredCars = [...allCars];
+                    renderCars();
+                } else {
+                    showNotification('Error', 'Failed to load cars: ' + result.message, 'error');
+                    showNoCars();
+                }
+            } catch (error) {
+                console.error('Error fetching cars:', error);
+                showNotification('Error', 'Failed to connect to the server', 'error');
+                showNoCars();
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+
+        
+       // Populate warehouse dropdowns
+function populateWarehouseDropdowns(warehouses) {
+    // Populate filter dropdown
+    const warehouseFilterEl = document.getElementById('warehouseFilter');
+    warehouseFilterEl.innerHTML = '<option value="">All Warehouses</option>';
+    
+    warehouses.forEach(warehouse => {
+        const option = document.createElement('option');
+        option.value = warehouse.warehouse_no;
+        option.textContent = warehouse.warehouse_name;
+        warehouseFilterEl.appendChild(option);
+    });
+}
+
+// Filter cars based on search and warehouse selection
+function filterCars() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const warehouseId = warehouseFilter.value;
+    
+    filteredCars = allCars.filter(car => {
+        // Add defensive checks to handle possible undefined values
+        const carName = car.car_name ? car.car_name.toString().toLowerCase() : '';
+        const carNo = car.car_no ? car.car_no.toString() : '';
+        const warehouseNo = car.warehouse_no ? car.warehouse_no.toString() : '';
+        
+        const matchesSearch = carName.includes(searchTerm) || 
+                             carNo.includes(searchTerm);
+        
+        const matchesWarehouse = !warehouseId || warehouseNo === warehouseId;
+        
+        return matchesSearch && matchesWarehouse;
+    });
+    
+    currentPage = 1;
+    renderCars();
+}
+// Render cars table
+function renderCars() {
+    if (filteredCars.length === 0) {
+        showNoCars();
+        return;
+    }
+    
+    // Calculate pagination values
+    const totalPages = Math.ceil(filteredCars.length / carsPerPage);
+    const startIndex = (currentPage - 1) * carsPerPage;
+    const endIndex = Math.min(startIndex + carsPerPage, filteredCars.length);
+    const currentCars = filteredCars.slice(startIndex, endIndex);
+    
+    // Update table info
+    tableInfo.textContent = `Showing ${startIndex + 1} to ${endIndex} of ${filteredCars.length} entries`;
+    
+    // Generate table HTML
+    const tbody = document.querySelector('#carsTable tbody');
+    tbody.innerHTML = '';
+    
+    currentCars.forEach(car => {
+        const tr = document.createElement('tr');
+        
+        // Status badge
+        const statusClass = car.status === 'Available' ? 'badge-available' : 'badge-booked';
+        
+        tr.innerHTML = `
+            <td>${car.car_no}</td>
+            <td>${car.car_name}</td>
+            <td>${car.car_miles.toLocaleString()}</td>
+            <td>$${car.car_booking_price.toLocaleString()}</td>
+            <td>${car.warehouse_no}</td>
+            <td><span class="badge badge-status ${statusClass}">${car.status || 'Available'}</span></td>
+            <td class="text-center">
+                <button class="btn btn-action btn-view" onclick="viewCar(${car.car_no})">
+                    <i class="fas fa-eye"></i>
+                </button>
+
+            </td>
+        `;
+        
+        tbody.appendChild(tr);
+    });
+    
+    // Generate pagination
+    generatePagination(totalPages);
+    
+    // Show table
+    carsTableContainer.style.display = 'block';
+    noCarsMessage.style.display = 'none';
+}
+
+// Generate pagination links
+function generatePagination(totalPages) {
+    pagination.innerHTML = '';
+    
+    // Previous button
+    const prevLi = document.createElement('li');
+    prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+    prevLi.innerHTML = `<a class="page-link" href="#" onclick="changePage(${currentPage - 1}); return false;"><i class="fas fa-chevron-left"></i></a>`;
+    pagination.appendChild(prevLi);
+    
+    // Page numbers
+    const maxPages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxPages / 2));
+    let endPage = Math.min(totalPages, startPage + maxPages - 1);
+    
+    if (endPage - startPage + 1 < maxPages && startPage > 1) {
+        startPage = Math.max(1, endPage - maxPages + 1);
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+        const li = document.createElement('li');
+        li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+        li.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a>`;
+        pagination.appendChild(li);
+    }
+    
+    // Next button
+    const nextLi = document.createElement('li');
+    nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+    nextLi.innerHTML = `<a class="page-link" href="#" onclick="changePage(${currentPage + 1}); return false;"><i class="fas fa-chevron-right"></i></a>`;
+    pagination.appendChild(nextLi);
+}
+
+// Change page
+function changePage(page) {
+    const totalPages = Math.ceil(filteredCars.length / carsPerPage);
+    
+    if (page < 1 || page > totalPages) {
+        return;
+    }
+    
+    currentPage = page;
+    renderCars();
+    
+    // Scroll to top of table
+    document.querySelector('.card').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Show loading state
+function showLoading(isLoading) {
+    loadingContainer.style.display = isLoading ? 'flex' : 'none';
+    
+    if (!isLoading && filteredCars.length > 0) {
+        carsTableContainer.style.display = 'block';
+        noCarsMessage.style.display = 'none';
+    }
+}
+
+// Show no cars message
+function showNoCars() {
+    carsTableContainer.style.display = 'none';
+    noCarsMessage.style.display = 'block';
+    tableInfo.textContent = 'Showing 0 to 0 of 0 entries';
+    pagination.innerHTML = '';
+}
+
+// View car details
+function viewCar(carNo) {
+    const car = allCars.find(c => c.car_no === carNo);
+    
+    if (!car) {
+        showNotification('Error', 'Car not found', 'error');
+        return;
+    }
+    
+    document.getElementById('viewCarNo').textContent = car.car_no;
+    document.getElementById('viewCarName').textContent = car.car_name;
+    document.getElementById('viewCarMiles').textContent = car.car_miles.toLocaleString();
+    document.getElementById('viewCarPrice').textContent = car.car_booking_price.toLocaleString();
+    document.getElementById('viewWarehouseNo').textContent = car.warehouse_no;
+    
+    // Find warehouse info
+    const warehouse = allWarehouses.find(w => w.warehouse_no === car.warehouse_no);
+    let warehouseHTML = '<p class="text-muted">Warehouse information not available.</p>';
+    
+    if (warehouse) {
+        warehouseHTML = `
+            <p><strong>Name:</strong> ${warehouse.warehouse_name}</p>
+            <p><strong>Location:</strong> ${warehouse.warehouse_location || 'N/A'}</p>
+            <p><strong>Capacity:</strong> ${warehouse.capacity || 'N/A'}</p>
+        `;
+    }
+    
+    document.getElementById('warehouseInfoContainer').innerHTML = warehouseHTML;
+    
+    // Fetch booking history (simulating API call)
+    fetchBookingHistory(carNo);
+    
+    // Show modal
+    const viewCarModal = new bootstrap.Modal(document.getElementById('viewCarModal'));
+    viewCarModal.show();
+}
+
+// Fetch booking history for a car
+async function fetchBookingHistory(carNo) {
+    const bookingHistoryContainer = document.getElementById('bookingHistoryContainer');
+    bookingHistoryContainer.innerHTML = '<p class="text-center"><i class="fas fa-spinner fa-spin me-2"></i> Loading booking history...</p>';
+    
+    try {
+        // In a real application, you would fetch this from your API
+        // For demo purposes, we'll simulate some data after a delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Simulate some booking history data
+        const hasBookings = Math.random() > 0.5;
+        
+        if (hasBookings) {
+            const numBookings = Math.floor(Math.random() * 3) + 1;
+            let html = '<div class="table-responsive"><table class="table table-sm"><thead><tr>' +
+                       '<th>Booking ID</th><th>Customer</th><th>From</th><th>To</th><th>Status</th></tr></thead><tbody>';
+            
+            for (let i = 1; i <= numBookings; i++) {
+                const startDate = new Date();
+                startDate.setDate(startDate.getDate() + Math.floor(Math.random() * 10));
+                
+                const endDate = new Date(startDate);
+                endDate.setDate(endDate.getDate() + Math.floor(Math.random() * 5) + 1);
+                
+                const status = Math.random() > 0.3 ? 'Completed' : 'Upcoming';
+                const statusClass = status === 'Completed' ? 'text-success' : 'text-primary';
+                
+                html += `<tr>
+                    <td>BK-${Math.floor(1000 + Math.random() * 9000)}</td>
+                    <td>Customer ${Math.floor(100 + Math.random() * 900)}</td>
+                    <td>${startDate.toLocaleDateString()}</td>
+                    <td>${endDate.toLocaleDateString()}</td>
+                    <td><span class="${statusClass}">${status}</span></td>
+                </tr>`;
+            }
+            
+            html += '</tbody></table></div>';
+            bookingHistoryContainer.innerHTML = html;
+        } else {
+            bookingHistoryContainer.innerHTML = '<p class="text-muted">No booking history available for this car.</p>';
+        }
+    } catch (error) {
+        console.error('Error fetching booking history:', error);
+        bookingHistoryContainer.innerHTML = '<p class="text-danger">Failed to load booking history.</p>';
+    }
+}
+
+// Open delete confirmation modal
+function openDeleteModal(carNo) {
+    const car = allCars.find(c => c.car_no === carNo);
+    
+    if (!car) {
+        showNotification('Error', 'Car not found', 'error');
+        return;
+    }
+    
+    document.getElementById('deleteCarName').textContent = car.car_name;
+    currentCarForDelete = carNo;
+    
+    const deleteCarModal = new bootstrap.Modal(document.getElementById('deleteCarModal'));
+    deleteCarModal.show();
+}
+
+
+// Open edit car modal
+function openEditModal(carNo) {
+    const car = allCars.find(c => c.car_no === carNo);
+    
+    if (!car) {
+        showNotification('Error', 'Car not found', 'error');
+        return;
+    }
+    
+    // Find warehouse
+    const warehouse = allWarehouses.find(w => w.warehouse_no === car.warehouse_no);
+    
+    // Fill form
+    document.getElementById('editCarNo').value = car.car_no;
+    document.getElementById('editCarName').value = car.car_name;
+    document.getElementById('editCarMiles').value = car.car_miles;
+    document.getElementById('editCarBookingPrice').value = car.car_booking_price;
+    document.getElementById('editWarehouseName').value = warehouse ? warehouse.warehouse_name : '';
+    
+    // Show modal
+    const editCarModal = new bootstrap.Modal(document.getElementById('editCarModal'));
+    editCarModal.show();
+}
+
+
+// Add new car
+
+// Show notification toast
+function showNotification(title, message, type = 'info') {
+    const toast = document.getElementById('toast');
+    const toastTitle = document.getElementById('toastTitle');
+    const toastMessage = document.getElementById('toastMessage');
+    
+    // Set title and message
+    toastTitle.textContent = title;
+    toastMessage.textContent = message;
+    
+    // Set color based on type
+    toast.classList.remove('bg-success', 'bg-danger', 'bg-info');
+    
+    switch (type) {
+        case 'success':
+            toast.classList.add('bg-success', 'text-white');
+            break;
+        case 'error':
+            toast.classList.add('bg-danger', 'text-white');
+            break;
+        default:
+            toast.classList.add('bg-info', 'text-white');
+    }
+    
+    // Show toast
+    const bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+}
+</script>
+</body>
+</html>

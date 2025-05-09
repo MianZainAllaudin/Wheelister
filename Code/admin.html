@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheelister | Admin Dashboard</title>
+    <link rel="icon" href="logo-removebg-preview.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fc;
+            padding-top: 80px;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand img {
+            height: 50px;
+        }
+        
+        .navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-link {
+            color: var(--dark-color);
+            font-weight: 500;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 30px;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .hero-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        /* Cards */
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stats-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(58, 12, 163, 0.1));
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        
+        .stats-icon i {
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+        
+        .stats-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        /* Tabs and Forms */
+        .admin-tab-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .admin-tab {
+            padding: 15px 25px;
+            flex: 1;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .admin-tab.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            background-color: white;
+        }
+        
+        .admin-tab:hover:not(.active) {
+            background-color: rgba(0, 0, 0, 0.03);
+        }
+        
+        .admin-form-container {
+            padding: 30px;
+        }
+        
+        .form-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .form-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .form-control {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+        }
+        
+        /* Buttons */
+        .primary-button {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .primary-button:hover {
+            background: linear-gradient(135deg, #3a0ca3, #4361ee);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            color: white;
+        }
+        
+        /* Messages */
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+        
+        .success-message {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+        
+        .error-message {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #1a1a2e;
+            color: #f7f7f7;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-logo img {
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links h5 {
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links ul li a {
+            color: #bbbbbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links ul li a:hover {
+            color: #ffffff;
+            padding-left: 5px;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbbbbb;
+            font-size: 0.9rem;
+        }
+        
+        /* Activity Feed */
+        .activity-card {
+            border-left: 3px solid var(--primary-color);
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+            margin-right: 15px;
+        }
+        
+        /* Animations */
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="logo-removebg-preview.png" alt="Wheelister Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cars-display.html"><i class="fas fa-car me-1"></i> Cars</a>
+                    </li>
+            
+                    <li class="nav-item">
+                        <a class="nav-link" href="adminsettings.html"><i class="fas fa-cog me-1"></i> Settings</a>
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="login.html" > logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 animate-in" style="animation-delay: 0.1s">
+                    <h1 class="hero-heading">ADMIN DASHBOARD</h1>
+                    <p class="mb-0">Welcome back, Admin! Manage your car rental operations efficiently.</p>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block text-end animate-in" style="animation-delay: 0.3s">
+                    <i class="fas fa-chart-line" style="font-size: 5rem; opacity: 0.3"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Main Content Section -->
+    <section class="container">
+        <div class="row">
+            <!-- Form Section -->
+            <div class="col-lg-8 mb-4 animate-in" style="animation-delay: 0.6s">
+                <div class="admin-tab-container">
+                    <div class="admin-tabs">
+                        <div class="admin-tab active" id="warehouseTab" onclick="showWarehouseForm()">
+                            <i class="fas fa-warehouse me-2"></i> Add Warehouse
+                        </div>
+                        <div class="admin-tab" id="carTab" onclick="showCarForm()">
+                            <i class="fas fa-car me-2"></i> Add Car
+                        </div>
+                    </div>
+                    
+                    <div class="admin-form-container">
+                        <!-- Warehouse Form -->
+                        <div id="warehouseFormSection">
+                            <h2 class="form-title">Add New Warehouse</h2>
+                            <form id="warehouseForm">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="warehouseName" class="form-label">Warehouse Name</label>
+                                            <input type="text" class="form-control" id="warehouseName" name="warehouseName" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address" name="address" required>
+                                </div>
+                                <button type="submit" class="btn primary-button">
+                                    <i class="fas fa-plus-circle me-2"></i> Add Warehouse
+                                </button>
+                            </form>
+                            <div id="warehouseMessage"></div>
+                        </div>
+
+                        <!-- Car Form -->
+                        <div id="carFormSection" style="display: none;">
+                            <h2 class="form-title">Add New Car</h2>
+                            <form id="carForm">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="carName" class="form-label">Car Name</label>
+                                            <input type="text" class="form-control" id="carName" name="carName" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="warehouseNameForCar" class="form-label">Warehouse Name</label>
+                                            <input type="text" class="form-control" id="warehouseNameForCar" name="warehouseNameForCar" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="carMiles" class="form-label">Car Miles</label>
+                                            <input type="number" class="form-control" id="carMiles" name="carMiles" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="carBookingPrice" class="form-label">Car Booking Price</label>
+                                            <input type="number" class="form-control" id="carBookingPrice" name="carBookingPrice" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn primary-button">
+                                    <i class="fas fa-plus-circle me-2"></i> Add Car
+                                </button>
+                            </form>
+                            <div id="carMessage"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Activity Feed Section -->
+            <div class="col-lg-4 animate-in" style="animation-delay: 0.7s">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3"><i class="fas fa-bell me-2"></i> Recent Activity</h5>
+                        
+                        <div class="activity-card">
+                            <div class="d-flex">
+                                <div class="activity-icon">
+                                    <i class="fas fa-car"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">New Car Added</h6>
+                                    <p class="mb-0 text-muted small">Toyota Corolla added to Lahore Warehouse</p>
+                                    <small class="text-muted">2 hours ago</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-card">
+                            <div class="d-flex">
+                                <div class="activity-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">New Booking</h6>
+                                    <p class="mb-0 text-muted small">Honda Civic booked for May 8-12</p>
+                                    <small class="text-muted">3 hours ago</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-card">
+                            <div class="d-flex">
+                                <div class="activity-icon">
+                                    <i class="fas fa-warehouse"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Warehouse Updated</h6>
+                                    <p class="mb-0 text-muted small">Karachi Warehouse contact info updated</p>
+                                    <small class="text-muted">Yesterday</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-card">
+                            <div class="d-flex">
+                                <div class="activity-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">New User Registration</h6>
+                                    <p class="mb-0 text-muted small">Ahmad has registered a new account</p>
+                                    <small class="text-muted">2 days ago</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="btn btn-sm btn-outline-primary w-100 mt-3">View All Activity</a>
+                    </div>
+                </div>
+                
+               
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        <img src="logo-removebg-preview.png" alt="Wheelister Logo">
+                    </div>
+                    <p>Your trusted partner for premium car rentals across Pakistan. Making your journeys comfortable and memorable since 2020.</p>
+                    <div class="mt-3">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-sm-4 col-6 mb-4">
+                    <div class="footer-links">
+                        <h5>Company</h5>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Our Team</a></li>
+                            <li><a href="#">Careers</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-sm-4 col-6 mb-4">
+                    <div class="footer-links">
+                        <h5>Support</h5>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">FAQs</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center copyright">
+                &copy; 2025 Wheelister. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                document.querySelector('.navbar').classList.add('scrolled');
+            } else {
+                document.querySelector('.navbar').classList.remove('scrolled');
+            }
+        });
+        
+        // Tab switching functions
+        function showWarehouseForm() {
+            document.getElementById('warehouseFormSection').style.display = 'block';
+            document.getElementById('carFormSection').style.display = 'none';
+            
+            document.getElementById('warehouseTab').classList.add('active');
+            document.getElementById('carTab').classList.remove('active');
+        }
+        
+        function showCarForm() {
+            document.getElementById('warehouseFormSection').style.display = 'none';
+            document.getElementById('carFormSection').style.display = 'block';
+            
+            document.getElementById('warehouseTab').classList.remove('active');
+            document.getElementById('carTab').classList.add('active');
+        }
+        
+        // Add Warehouse functionality
+        document.getElementById('warehouseForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const warehouseName = document.getElementById('warehouseName').value;
+            const address = document.getElementById('address').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+
+            // Prepare data to send to the server
+            const warehouseData = {
+                warehouse_name: warehouseName,
+                address: address,
+                phonenumber: phoneNumber
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/add-warehouse', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(warehouseData)
+                });
+
+                const result = await response.json();
+
+                // Display success or failure message for warehouse
+                const messageElement = document.getElementById('warehouseMessage');
+                if (response.ok) {
+                    messageElement.className = 'message success-message mt-3';
+                    messageElement.innerHTML = `<i class="fas fa-check-circle me-2"></i> Warehouse added successfully! Warehouse No: ${result.warehouse_no}`;
+                    // Clear form
+                    document.getElementById('warehouseForm').reset();
+                } else {
+                    messageElement.className = 'message error-message mt-3';
+                    messageElement.innerHTML = `<i class="fas fa-exclamation-circle me-2"></i> Error: ${result.message}`;
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                const messageElement = document.getElementById('warehouseMessage');
+                messageElement.className = 'message error-message mt-3';
+                messageElement.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i> Error while adding the warehouse. Please try again.';
+            }
+        });
+
+        // Add Car functionality
+        document.getElementById('carForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const carName = document.getElementById('carName').value;
+            const carMiles = document.getElementById('carMiles').value;
+            const carBookingPrice = document.getElementById('carBookingPrice').value;
+            const warehouseNameForCar = document.getElementById('warehouseNameForCar').value;
+
+            // Prepare data to send to the server
+            const carData = {
+                car_name: carName,
+                car_miles: carMiles,
+                car_booking_price: carBookingPrice,
+                warehouse_name: warehouseNameForCar
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/add-car', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(carData)
+                });
+
+                const result = await response.json();
+
+                // Display success or failure message
+                const messageElement = document.getElementById('carMessage');
+                if (response.ok) {
+                    messageElement.className = 'message success-message mt-3';
+                    messageElement.innerHTML = `<i class="fas fa-check-circle me-2"></i> Car added successfully! Car No: ${result.car_no}`;
+                    // Clear form
+                    document.getElementById('carForm').reset();
+                } else {
+                    messageElement.className = 'message error-message mt-3';
+                    messageElement.innerHTML = `<i class="fas fa-exclamation-circle me-2"></i> Error: ${result.message}`;
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                const messageElement = document.getElementById('carMessage');
+                messageElement.className = 'message error-message mt-3';
+                messageElement.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i> Error while adding the car. Please try again.';
+            }
+        });
+
+        // Apply animations when page loads
+        // Apply animations when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const animateElements = document.querySelectorAll('.animate-in');
+    
+    animateElements.forEach(element => {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        
+        observer.observe(element);
+    });
+    
+    // Initialize any data or components
+    initializeDashboard();
+});
+
+// Function to initialize dashboard data
+function initializeDashboard() {
+    // You could fetch initial data here
+    console.log('Dashboard initialized');
+    
+    // Example: Fetch warehouse list for dropdown
+    fetchWarehouseList();
+}
+
+// Function to fetch warehouse list
+async function fetchWarehouseList() {
+    try {
+        const response = await fetch('http://localhost:3000/warehouses');
+        if (response.ok) {
+            const warehouses = await response.json();
+            // Populate warehouse dropdown
+            populateWarehouseDropdown(warehouses);
+        }
+    } catch (error) {
+        console.error('Error fetching warehouses:', error);
+    }
+}
+
+// Function to populate warehouse dropdown
+function populateWarehouseDropdown(warehouses) {
+    const warehouseInput = document.getElementById('warehouseNameForCar');
+    
+    // Create datalist for warehouse input
+    const datalistId = 'warehousesList';
+    let datalist = document.getElementById(datalistId);
+    
+    if (!datalist) {
+        datalist = document.createElement('datalist');
+        datalist.id = datalistId;
+        document.body.appendChild(datalist);
+        warehouseInput.setAttribute('list', datalistId);
+    }
+    
+    // Clear existing options
+    datalist.innerHTML = '';
+    
+    // Add warehouse options
+    warehouses.forEach(warehouse => {
+        const option = document.createElement('option');
+        option.value = warehouse.warehouse_name;
+        datalist.appendChild(option);
+    });
+}
+
+// Show notifications
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0 position-fixed bottom-0 end-0 m-3`;
+    notification.setAttribute('role', 'alert');
+    notification.setAttribute('aria-live', 'assertive');
+    notification.setAttribute('aria-atomic', 'true');
+    
+    notification.innerHTML = `
+        <div class="d-flex">
+            <div class="toast-body">
+                ${message}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    const toast = new bootstrap.Toast(notification);
+    toast.show();
+    
+    // Remove notification after it's hidden
+    notification.addEventListener('hidden.bs.toast', function() {
+        notification.remove();
+    });
+}
+
+// Export data to CSV
+function exportToCSV(filename, data) {
+    const csvContent = "data:text/csv;charset=utf-8," + data.map(row => Object.values(row).join(',')).join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Example function for generating reports
+function generateReport(reportType) {
+    // Fetch data based on report type
+    fetch(`http://localhost:3000/reports/${reportType}`)
+        .then(response => response.json())
+        .then(data => {
+            // Export data to CSV
+            exportToCSV(`${reportType}_report.csv`, data);
+            showNotification(`${reportType} report downloaded successfully`);
+        })
+        .catch(error => {
+            console.error('Error generating report:', error);
+            showNotification('Error generating report', 'error');
+        });
+}
+
+// Add event listeners for quick action buttons
+document.addEventListener('DOMContentLoaded', function() {
+    // Add click event for "Generate Reports" button
+    const generateReportsBtn = document.querySelector('.list-group-item:last-child');
+    if (generateReportsBtn) {
+        generateReportsBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Show report options modal
+            const reportTypes = ['cars', 'warehouses', 'bookings', 'users'];
+            const modal = new bootstrap.Modal(document.getElementById('reportModal') || createReportModal(reportTypes));
+            modal.show();
+        });
+    }
+});
+
+// Create report modal dynamically
+function createReportModal(reportTypes) {
+    const modalDiv = document.createElement('div');
+    modalDiv.className = 'modal fade';
+    modalDiv.id = 'reportModal';
+    modalDiv.tabIndex = '-1';
+    modalDiv.setAttribute('aria-labelledby', 'reportModalLabel');
+    modalDiv.setAttribute('aria-hidden', 'true');
+    
+    modalDiv.innerHTML = `
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reportModalLabel">Generate Report</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Select the type of report you want to generate:</p>
+                    <div class="list-group">
+                        ${reportTypes.map(type => `
+                            <button type="button" class="list-group-item list-group-item-action report-type" data-type="${type}">
+                                ${type.charAt(0).toUpperCase() + type.slice(1)} Report
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modalDiv);
+    
+    // Add event listeners to report type buttons
+    modalDiv.querySelectorAll('.report-type').forEach(button => {
+        button.addEventListener('click', function() {
+            const reportType = this.getAttribute('data-type');
+            generateReport(reportType);
+            
+            // Hide modal
+            const modal = bootstrap.Modal.getInstance(modalDiv);
+            modal.hide();
+        });
+    });
+    
+    return modalDiv;
+}
+</script>
+</body>
+</html>

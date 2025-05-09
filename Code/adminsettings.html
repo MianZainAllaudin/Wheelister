@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheelister | Change Admin Password</title>
+    <link rel="icon" href="logo-removebg-preview.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fc;
+            padding-top: 80px;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand img {
+            height: 50px;
+        }
+        
+        .navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-link {
+            color: var(--dark-color);
+            font-weight: 500;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 30px;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .hero-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        /* Password Form */
+        .password-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 30px;
+            padding: 30px;
+        }
+        
+        .form-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .form-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .form-control {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+        }
+        
+        /* Buttons */
+        .primary-button {
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .primary-button:hover {
+            background: linear-gradient(135deg, #3a0ca3, #4361ee);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            color: white;
+        }
+        
+        /* Messages */
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .success-message {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+        
+        .error-message {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+        
+        /* Password strength indicator */
+        .password-strength {
+            height: 5px;
+            margin-top: -15px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .strength-weak {
+            background-color: #dc3545;
+            width: 30%;
+        }
+        
+        .strength-medium {
+            background-color: #ffc107;
+            width: 70%;
+        }
+        
+        .strength-strong {
+            background-color: #28a745;
+            width: 100%;
+        }
+        
+        .password-info {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: -15px;
+            margin-bottom: 20px;
+        }
+        
+        /* Password visibility toggle */
+        .password-field-container {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 12px;
+            cursor: pointer;
+            color: #6c757d;
+        }
+        
+        /* Animation */
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #1a1a2e;
+            color: #f7f7f7;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-logo img {
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links h5 {
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links ul li a {
+            color: #bbbbbb;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links ul li a:hover {
+            color: #ffffff;
+            padding-left: 5px;
+        }
+        
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbbbbb;
+            font-size: 0.9rem;
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="logo-removebg-preview.png" alt="Wheelister Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cars-display.html"><i class="fas fa-car me-1"></i> Cars</a>
+                    </li>   
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-cog me-1"></i> Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 animate-in" style="animation-delay: 0.1s">
+                    <h1 class="hero-heading">ACCOUNT SETTINGS</h1>
+                    <p class="mb-0">Manage your admin account and security preferences.</p>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block text-end animate-in" style="animation-delay: 0.3s">
+                    <i class="fas fa-shield-alt" style="font-size: 5rem; opacity: 0.3"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="container">
+        <div class="row justify-content-center">
+            <!-- Settings Navigation -->
+            <div class="col-lg-3 mb-4 animate-in" style="animation-delay: 0.4s">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-key me-2"></i> Change Password
+                    </a>
+                    
+                </div>
+            </div>
+            
+            <!-- Password Form -->
+            <div class="col-lg-9 mb-4 animate-in" style="animation-delay: 0.5s">
+                <div class="password-container">
+                    <h2 class="form-title">Change Admin Password</h2>
+                    <p class="text-muted mb-4">Update your password to maintain account security. Strong passwords include uppercase letters, numbers, and special characters.</p>
+                    
+                    <form id="changePasswordForm">
+                        <div class="mb-3">
+                            <label for="adminName" class="form-label">Admin Username</label>
+                            <input type="text" class="form-control" id="adminName" name="adminName" required>
+                        </div>
+                        
+                        <div class="mb-3 password-field-container">
+                            <label for="oldPassword" class="form-label">Current Password</label>
+                            <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
+                            <i class="toggle-password fas fa-eye" data-target="oldPassword"></i>
+                        </div>
+                        
+                        <div class="mb-3 password-field-container">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                            <i class="toggle-password fas fa-eye" data-target="newPassword"></i>
+                            
+                            <div class="password-strength" id="passwordStrength"></div>
+                            <div class="password-info" id="passwordInfo">Password should be at least 8 characters long</div>
+                        </div>
+                        
+                        <div class="mb-4 password-field-container">
+                            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                            <i class="toggle-password fas fa-eye" data-target="confirmPassword"></i>
+                        </div>
+                        
+                        <div class="d-flex">
+                            <button type="submit" class="btn primary-button me-2">
+                                <i class="fas fa-save me-2"></i> Update Password
+                            </button>
+                            <button type="reset" class="btn btn-outline-secondary">
+                                <i class="fas fa-undo me-2"></i> Reset
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div id="passwordMessage" class="message"></div>
+                </div>
+                
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-info-circle me-2 text-primary"></i> Password Security Tips</h5>
+                        <ul class="mt-3">
+                            <li>Use a combination of uppercase letters, lowercase letters, numbers, and special characters</li>
+                            <li>Make your password at least 8 characters long</li>
+                            <li>Avoid using common words or personal information</li>
+                            <li>Use different passwords for different accounts</li>
+                            <li>Change your password regularly</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        <img src="logo-removebg-preview.png" alt="Wheelister Logo">
+                    </div>
+                    <p>Your trusted partner for premium car rentals across Pakistan. Making your journeys comfortable and memorable since 2020.</p>
+                    <div class="mt-3">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-sm-4 col-6 mb-4">
+                    <div class="footer-links">
+                        <h5>Company</h5>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Our Team</a></li>
+                            <li><a href="#">Careers</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-sm-4 col-6 mb-4">
+                    <div class="footer-links">
+                        <h5>Support</h5>
+                        <ul>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">FAQs</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center copyright">
+                &copy; 2025 Wheelister. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                document.querySelector('.navbar').classList.add('scrolled');
+            } else {
+                document.querySelector('.navbar').classList.remove('scrolled');
+            }
+        });
+        
+        // Password visibility toggle
+        document.querySelectorAll('.toggle-password').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const input = document.getElementById(targetId);
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            });
+        });
+        
+        // Password strength checker
+        document.getElementById('newPassword').addEventListener('input', function() {
+            const password = this.value;
+            const strengthDiv = document.getElementById('passwordStrength');
+            const infoDiv = document.getElementById('passwordInfo');
+            
+            // Clear previous classes
+            strengthDiv.className = 'password-strength';
+            
+            if (password.length === 0) {
+                strengthDiv.style.display = 'none';
+                infoDiv.textContent = 'Password should be at least 8 characters long';
+                return;
+            }
+            
+            strengthDiv.style.display = 'block';
+            
+            // Check password strength
+            let strength = 0;
+            
+            // Length check
+            if (password.length >= 8) strength += 1;
+            
+            // Complexity checks
+            if (/[A-Z]/.test(password)) strength += 1;  // Has uppercase
+            if (/[0-9]/.test(password)) strength += 1;  // Has number
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;  // Has special char
+            
+            // Update UI based on strength
+            if (strength === 0 || password.length < 6) {
+                strengthDiv.className = 'password-strength strength-weak';
+                infoDiv.textContent = 'Weak - Use at least 8 characters';
+            } else if (strength <= 2) {
+                strengthDiv.className = 'password-strength strength-medium';
+                infoDiv.textContent = 'Medium - Add numbers and special characters';
+            } else {
+                strengthDiv.className = 'password-strength strength-strong';
+                infoDiv.textContent = 'Strong password';
+            }
+        });
+        
+        // Confirm password check
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('newPassword').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                this.setCustomValidity("Passwords don't match");
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+        
+        // Form submission
+        document.getElementById('changePasswordForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const adminName = document.getElementById('adminName').value;
+            const oldPassword = document.getElementById('oldPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const messageDiv = document.getElementById('passwordMessage');
+            
+            // Clear previous messages
+            messageDiv.style.display = 'none';
+            messageDiv.className = 'message';
+            
+            // Client-side validation
+            if (!adminName || !oldPassword || !newPassword) {
+                messageDiv.textContent = 'All fields are required';
+                messageDiv.className = 'message error-message';
+                messageDiv.style.display = 'block';
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                messageDiv.textContent = 'New password and confirmation do not match';
+                messageDiv.className = 'message error-message';
+                messageDiv.style.display = 'block';
+                return;
+            }
+            
+            // Send request to server
+            try {
+                const response = await fetch('http://localhost:3000/change-admin-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        adminName,
+                        oldPassword,
+                        newPassword
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    messageDiv.textContent = result.message || 'Password changed successfully!';
+                    messageDiv.className = 'message success-message';
+                    // Clear form on success
+                    this.reset();
+                } else {
+                    messageDiv.textContent = result.message || 'Failed to change password';
+                    messageDiv.className = 'message error-message';
+                }
+                
+                messageDiv.style.display = 'block';
+                
+                // Auto-hide message after 5 seconds
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                messageDiv.textContent = 'Server error. Please try again later.';
+                messageDiv.className = 'message error-message';
+                messageDiv.style.display = 'block';
+            }
+        });
+        
+        // Apply animations when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate-in');
+            
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
